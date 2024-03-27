@@ -12,6 +12,10 @@ namespace LibertyLux.DataAccess.DbContext
         {
         }
 
+        public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<RestaurantTable> RestaurantTables { get; set; }
         // Add your other DbSet properties for other entities
 
         protected override void OnModelCreating(ModelBuilder builder)

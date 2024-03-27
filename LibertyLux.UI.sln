@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibertyLux.UI", "LibertyLux.UI\LibertyLux.UI.csproj", "{869E6C4A-1FBF-49C8-A0A4-0CB5ED289CED}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibertyLux.API", "LibertyLux.API\LibertyLux.API.csproj", "{ED3FF11D-E42B-4572-9A1C-42B1C45569E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibertyLux.Entity", "LibertyLux.Entity\LibertyLux.Entity.csproj", "{F04CFD09-7E4C-4225-97EB-8FFD587F0268}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibertyLux.Entity", "LibertyLux.Entity\LibertyLux.Entity.csproj", "{F04CFD09-7E4C-4225-97EB-8FFD587F0268}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibertyLux.DataAccess", "LibertyLux.DataAccess\LibertyLux.DataAccess.csproj", "{4662D790-1C8A-44D6-A708-C0E299175DB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibertyLux.DataAccess", "LibertyLux.DataAccess\LibertyLux.DataAccess.csproj", "{4662D790-1C8A-44D6-A708-C0E299175DB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibertyLux.Web", "LibertyLux.Web\LibertyLux.Web.csproj", "{DEBCA8F9-865C-4251-AB9E-0EB9C4B54677}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibertyLux.Business", "LibertyLux.Business\LibertyLux.Business.csproj", "{75E6C228-6899-4834-ACB3-F93ABD5BEC7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{869E6C4A-1FBF-49C8-A0A4-0CB5ED289CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{869E6C4A-1FBF-49C8-A0A4-0CB5ED289CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{869E6C4A-1FBF-49C8-A0A4-0CB5ED289CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{869E6C4A-1FBF-49C8-A0A4-0CB5ED289CED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED3FF11D-E42B-4572-9A1C-42B1C45569E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED3FF11D-E42B-4572-9A1C-42B1C45569E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED3FF11D-E42B-4572-9A1C-42B1C45569E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +31,14 @@ Global
 		{4662D790-1C8A-44D6-A708-C0E299175DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4662D790-1C8A-44D6-A708-C0E299175DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4662D790-1C8A-44D6-A708-C0E299175DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEBCA8F9-865C-4251-AB9E-0EB9C4B54677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEBCA8F9-865C-4251-AB9E-0EB9C4B54677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEBCA8F9-865C-4251-AB9E-0EB9C4B54677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEBCA8F9-865C-4251-AB9E-0EB9C4B54677}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75E6C228-6899-4834-ACB3-F93ABD5BEC7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E6C228-6899-4834-ACB3-F93ABD5BEC7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E6C228-6899-4834-ACB3-F93ABD5BEC7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E6C228-6899-4834-ACB3-F93ABD5BEC7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

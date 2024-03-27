@@ -1,0 +1,303 @@
+﻿@model List<MenuItem>
+@{
+    ViewData["Title"] = "Create Order";
+    Layout = null;
+    MenuItemCategory? lastCategory = null;
+   // int? tableId = TempData["TableId"] as int?;
+   
+}
+<script>
+    var menuItems = @Html.Raw(Json.Serialize(Model));
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+    @Html.Partial("_HeadPartialView") 
+    <style>
+        /* Basic reset */
+        body, h2, .menu_selection, .menu_items, .menu_item {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .category_title {
+            padding: 10px;
+            background-color: #6c757d; /* Updated to a softer blue-grey */
+            color: white;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 10px; /* Added for spacing between categories */
+            border-radius: 5px;
+        }
+
+        .menu_item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd; /* Add a border to each menu item for separation */
+        }
+
+            /* Alternating row colors */
+            .menu_item:nth-child(even) {
+                background-color: #F9F9F9;
+            }
+
+            .menu_item:nth-child(odd) {
+                background-color: #FFFFFF;
+            }
+
+            .menu_item img {
+                margin-right: 15px;
+                width: 50px; /* Adjust image size */
+                height: 50px; /* Adjust image size */
+                border-radius: 50%;
+            }
+
+            .menu_item h3 {
+                margin: 0;
+                font-size: 16px;
+            }
+
+            .menu_item p {
+                margin: 0;
+                color: #666;
+            }
+
+            .menu_item .price {
+                margin-left: auto; /* Push the price to the right */
+                font-weight: bold;
+            }
+
+        .add_to_order {
+            padding: 5px 10px;
+            margin-left: 15px;
+            background-color: #28a745; /* Keep the green color for the add button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            padding: 20px; 
+            gap: 20px;
+        }
+
+        .menu-side {
+            flex: 1; /* Keeps the 50/50 ratio */
+            overflow-y: auto; /* Allows scrolling */
+            padding: 20px; /* Adds padding inside both sides for content spacing */
+            border-radius: 8px; /* Softens the corners */
+            background-color: #f8f9fa; /* Light background for each side */
+        }
+
+        .order-side {
+            flex: 1; /* Keeps the 50/50 ratio */
+            overflow-y: auto; /* Allows scrolling */
+            padding: 20px; /* Adds padding inside both sides for content spacing */
+            border-radius: 8px; /* Softens the corners */
+            background-color: #f8f9fa; /* Light background for each side */
+        }
+
+        #submit_order {
+            background-color: #007bff; /* Bootstrap's primary color for consistency */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px; /* Space above the submit button */
+        }
+
+        .selected_items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* This creates space between each order item */
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f2f2f2; /* Light grey background */
+            border-radius: 8px; /* Rounded corners for the order items */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        }
+
+            .order-item img {
+                margin-right: 10px; /* Space between the image and the text */
+                border-radius: 50%; /* Make the image round */
+                width: 40px; 
+                height: 40px; 
+            }
+
+            .order-item span {
+                font-size: 16px; 
+                flex-grow: 1; /* Ensures it takes up the available space, pushing the remove button to the edge */
+            }
+
+        .remove_from_order {
+            margin-left: 20px; /* Space before the remove button */
+            cursor: pointer;
+            background-color: #dc3545; /* Bootstrap's danger color for consistency */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+       
+        /* Adjust the total price display for better readability */
+        .total_price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px; /* Space above the total price */
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="menu-side">
+            <h2>Select Menu Items</h2>
+            <div class="menu_items">
+                @foreach (var menuItem in Model)
+                {
+                    if (lastCategory == null || menuItem.Category != lastCategory)
+                    {
+                        <div class="category_title">@menuItem.Category</div>
+                        lastCategory = menuItem.Category;
+                    }
+
+                    <div class="menu_item">
+                        <img src="@menuItem.Image" alt="@menuItem.Name" class="menu_item_image">
+                        <div class="menu_item_info">
+                            <h5>@menuItem.Name - $@menuItem.Price</h5>
+                            <p>@menuItem.Description</p>
+                        </div>
+                        <button class="add_to_order" data-menu-item-id="@menuItem.MenuItemId" onclick="addItemToOrder('@menuItem.MenuItemId', '@menuItem.Name', '@menuItem.Image', @menuItem.Price)">Add</button>
+
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="order-side">
+            <h2>Order Summary</h2>
+            <div class="selected_items">
+                <!-- Selected menu items will be listed here -->
+            </div>
+            <div class="total_price">
+                Total: $0.00
+            </div>
+            <button id="submit_order" onclick="submitOrder">Submit Order</button>
+        </div>
+    </div>
+
+    <script>
+
+        class MenuItem {
+            constructor(menuItemId, name, image, price, quantity = 1) {
+                this.menuItemId = menuItemId;
+                this.name = name;
+                this.image = image;
+                this.price = price;
+                this.quantity = quantity; // Default quantity
+            }
+        }
+
+        let currentOrder = [];
+
+        function addItemToOrder(menuItemId, name, image, price) {
+            const itemIndex = currentOrder.findIndex(item => item.menuItemId === menuItemId);
+
+            if (itemIndex > -1) {
+                // Item already exists in the order, increment quantity
+                currentOrder[itemIndex].quantity += 1;
+            } else {
+                // Add new item to the order
+                const newItem = new MenuItem(menuItemId, name, image, price);
+                console.log(newItem);
+                currentOrder.push(newItem);
+            }
+            console.log(currentOrder);
+            renderOrder();
+        }
+        
+
+        function renderOrder() {
+            const orderContainer = document.querySelector('.selected_items');
+            orderContainer.innerHTML = ''; // Clear current order display
+
+            currentOrder.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'order-item';
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
+                    <span>${item.name} - $${item.price} x ${item.quantity}</span>
+                `;
+                orderContainer.appendChild(itemElement);
+            });
+
+            // Update total price
+            const totalPriceElement = document.querySelector('.total_price');
+            const totalPrice = currentOrder.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            totalPriceElement.innerHTML = `Total: $${totalPrice.toFixed(2)}`;
+        }
+
+        function submitOrder() {
+            const url = `/Server/ServerCreateOrder?tableId=${tableId}`;
+
+           
+            const options = {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(currentOrder)
+            };
+
+            // Send the fetch request
+            fetch(url, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to create order: ${response.statusText}`);
+                    }
+                    return response.json(); // Assuming the response is JSON
+                })
+                .then(data => {
+                    // Handle the response data
+                    console.log('Order created successfully:', data);
+                    // Optionally, update the UI based on the response
+                })
+                .catch(error => {
+                    console.error('Error creating order:', error);
+                    // Optionally, handle the error and update the UI accordingly
+                });
+        }
+
+    </script>
+    
+
+   @*  <!-- jQery -->
+    <script src="/uitemplate/js/jquery-3.4.1.min.js"></script>
+    <!-- popper js -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <!-- bootstrap js -->
+    <script src="/uitemplate/js/bootstrap.js"></script>
+    <!-- owl slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+    </script>
+    <!-- isotope js -->
+    <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+    <!-- nice select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script> *@
+
+</body>
+</html>

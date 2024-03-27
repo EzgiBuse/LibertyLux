@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -17,11 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\LibertyLux.Business\LibertyLux.Business.csproj" />
     <ProjectReference Include="..\LibertyLux.DataAccess\LibertyLux.DataAccess.csproj" />
+    <ProjectReference Include="..\LibertyLux.Entity\LibertyLux.Entity.csproj" />
   </ItemGroup>
 
 </Project>

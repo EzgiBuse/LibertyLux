@@ -1,0 +1,176 @@
+﻿@model List<MenuItem>
+@{
+    ViewData["Title"] = "Menu Page";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+    @Html.Partial("_HeadPartialView");
+
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <div class="bg-box">
+            <img src="/uitemplate/images/hero-bg.jpg" alt="">
+    </div>
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+           
+          </a>
+
+         
+            <div class="user_option">
+             
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <!-- food section -->
+
+  <section class="food_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Our Menu
+        </h2>
+      </div>
+
+            <ul class="filters_menu">
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="Index" >All</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="Hamburger">Burger</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="Pizza">Pizza</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="Pasta">Pasta</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="Salad">Salad</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="MainDish">Main Dishes</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="SideDish">Side Dishes</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="Dessert">Dessert</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="HotDrink">Hot Drinks</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="ColdDrink">Cold Drinks</a></li>
+                <li class="category-button"><a asp-controller="CustomerMenu" asp-action="FilterByCategory" asp-route-category="AlcoholicDrink">Alcoholic Drinks</a></li>
+               
+            </ul>
+
+           
+
+
+
+
+
+      <div class="filters-content">
+        <div class="row grid">
+
+                    @foreach (var menuItem in Model)
+                    {
+                        <div class="col-sm-6 col-lg-4 all" >
+
+                            <div class="box" data-category="@menuItem.Category.ToString()">
+                                <div>
+                                    <div class="img-box">
+                                        <img src="@menuItem.Image" alt="@menuItem.Name">
+                                    </div>
+                                    <div class="detail-box">
+                                        <h5>@menuItem.Name</h5>
+                                        <p>@menuItem.Description</p>
+                                        <div class="options">
+                                            <h6>$@menuItem.Price</h6>
+                                            <a href="#">
+                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                                                <g>
+                                                <g>
+                                                <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248 c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
+                                        </g>
+                                    </g>
+                                    
+                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+         
+        </div>
+      </div>
+     
+  </section>
+
+  <!-- end food section -->
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 footer-col">
+          <div class="footer_contact">
+            <h4>
+              Contact Us
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  demo@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 footer-col">
+          <div class="footer_detail">
+            <a href="" class="footer-logo">
+              LibertyLux
+
+            </a>
+            <p>
+             Enjoy your meal with LibertyLux and experience the feeling of luxury. 
+            </p>
+            
+          </div>
+        </div>
+        <div class="col-md-4 footer-col">
+          <h4>
+            Opening Hours
+          </h4>
+          <p>
+            Everyday
+          </p>
+          <p>
+            10.00 Am -02.00 Am
+          </p>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Free Html Templates</a><br><br>
+          &copy; <span id="displayYear"></span> Distributed By
+          <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  @Html.Partial("_ScriptsPartialView");
+
+</body>
+
+</html>
