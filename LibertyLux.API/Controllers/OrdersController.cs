@@ -124,11 +124,12 @@ namespace LibertyLux.API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("AddOrder")]
         public async Task<IActionResult> AddOrder([FromBody] Order order)
         {
             try
             {
+                
                 if (order == null)
                     return BadRequest("Order is null.");
 
@@ -140,7 +141,24 @@ namespace LibertyLux.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-       
+
+        [HttpPost("AddOrderItems")]
+        public async Task<IActionResult> AddOrderItems([FromBody] List<OrderItem> orderItems)
+        {
+            try
+            {
+                if (orderItems == null)
+                    return BadRequest("Order Items are null.");
+
+                await _orderService.AddOrderItemsAsync(orderItems);
+                return Ok("OrderItems added successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpPut("UpdateOrder/{id}")]
         public async Task<IActionResult> UpdateOrder(int id, [FromBody] Order order)
         {

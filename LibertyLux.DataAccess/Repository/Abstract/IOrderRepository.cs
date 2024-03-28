@@ -17,5 +17,7 @@ namespace LibertyLux.DataAccess.Repository.Menu
        Task<Order> GetByOrderItemIdAsync(int orderItemId);
 
         Task<bool> DeleteOrderItemByOrderItemIdAsync(int orderItemId);
+
+        Task<bool> AddOrderItemsAsync(List<OrderItem> orderItems);
     }
 }

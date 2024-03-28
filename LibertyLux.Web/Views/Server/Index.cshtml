@@ -146,15 +146,19 @@
                 .catch(error => console.error('Error loading orders:', error));
         }
 
+        // function createOrder1() {
+        //     console.log(currentTableId);
+        //     var id = Number(currentTableId);
+        //     fetch(`/Server/ServerOrderView?tableId=${id}`, {
+        //         method: 'GET',
+        //     })
+        // }
+
         function createOrder() {
             console.log(currentTableId);
             var id = Number(currentTableId);
-            fetch(`/Server/ServerOrderView/tableId=${id}`, {
-                method: 'GET',
-               
-            })
+            window.location.href = `/Server/ServerOrder?tableId=${id}`;
         }
-
    
         function approveOrder(element) {
             // Retrieve the orderItemId from the data-order-item-id attribute

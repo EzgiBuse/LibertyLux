@@ -13,7 +13,7 @@ namespace LibertyLux.Web.Models
         public int OrderId { get; set; }
         public int TableId { get; set; }
         public Status Status { get; set; }
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public ICollection<OrderItem>? OrderItems { get; set; }
         
     }
 

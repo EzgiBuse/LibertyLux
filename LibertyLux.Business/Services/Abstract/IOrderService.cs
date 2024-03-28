@@ -18,5 +18,7 @@ namespace LibertyLux.Business.Services.Abstract
         Task<IEnumerable<OrderItem>> GetAllOrderDetailsByTableAsync(int tableId);
         Task DeleteOrderAsync(int id);
         Task<bool> DeleteOrderItemByOrderItemIdAsync(int id);
+
+        Task<bool> AddOrderItemsAsync(List<OrderItem> orderItems);
     }
 }

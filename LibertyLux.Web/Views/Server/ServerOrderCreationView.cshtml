@@ -3,10 +3,11 @@
     ViewData["Title"] = "Create Order";
     Layout = null;
     MenuItemCategory? lastCategory = null;
-   // int? tableId = TempData["TableId"] as int?;
+   int? tableId = TempData["TableId"] as int?;
    
 }
 <script>
+    var tableId = @Html.Raw(Json.Serialize(TempData["TableId"]));
     var menuItems = @Html.Raw(Json.Serialize(Model));
 </script>
 <!DOCTYPE html>
@@ -188,14 +189,14 @@
             </div>
         </div>
         <div class="order-side">
-            <h2>Order Summary</h2>
+            <h2>Order Summary  Table No :  @tableId</h2>
             <div class="selected_items">
                 <!-- Selected menu items will be listed here -->
             </div>
             <div class="total_price">
                 Total: $0.00
             </div>
-            <button id="submit_order" onclick="submitOrder">Submit Order</button>
+            <button id="submit_order" onclick="submitOrder()">Submit Order</button>
         </div>
     </div>
 
@@ -228,7 +229,7 @@
             console.log(currentOrder);
             renderOrder();
         }
-        
+
 
         function renderOrder() {
             const orderContainer = document.querySelector('.selected_items');
@@ -238,9 +239,9 @@
                 const itemElement = document.createElement('div');
                 itemElement.className = 'order-item';
                 itemElement.innerHTML = `
-                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
-                    <span>${item.name} - $${item.price} x ${item.quantity}</span>
-                `;
+                            <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px;">
+                            <span>${item.name} - $${item.price} x ${item.quantity}</span>
+                        `;
                 orderContainer.appendChild(itemElement);
             });
 
@@ -251,40 +252,41 @@
         }
 
         function submitOrder() {
-            const url = `/Server/ServerCreateOrder?tableId=${tableId}`;
+            
+            const url = `/Server/ServerCreateOrder?tableId=${tableId}&requestmodel=${(JSON.stringify(currentOrder))}`;
 
-           
+
             const options = {
-                method: 'POST', 
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(currentOrder)
+                
             };
-
-            // Send the fetch request
-            fetch(url, options)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to create order: ${response.statusText}`);
-                    }
-                    return response.json(); // Assuming the response is JSON
-                })
-                .then(data => {
-                    // Handle the response data
-                    console.log('Order created successfully:', data);
-                    // Optionally, update the UI based on the response
-                })
-                .catch(error => {
-                    console.error('Error creating order:', error);
-                    // Optionally, handle the error and update the UI accordingly
-                });
+            window.location.href = `/Server/ServerCreateOrder?tableId=${tableId}&requestmodel=${(JSON.stringify(currentOrder))}`;
+            // // Send the fetch request
+            // fetch(url, options)
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error(`Failed to create order: ${response.statusText}`);
+            //         }
+            //         return response.json(); // Assuming the response is JSON
+            //     })
+            //     .then(data => {
+            //         // Handle the response data
+            //         console.log('Order created successfully:', data);
+            //         // Optionally, update the UI based on the response
+            //     })
+            //     .catch(error => {
+            //         console.error('Error creating order:', error);
+            //         // Optionally, handle the error and update the UI accordingly
+            //     });
         }
 
     </script>
-    
 
-   @*  <!-- jQery -->
+
+    <!-- jQery -->
     <script src="/uitemplate/js/jquery-3.4.1.min.js"></script>
     <!-- popper js -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
@@ -297,7 +299,7 @@
     <!-- isotope js -->
     <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
     <!-- nice select -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script> *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
 
 </body>
 </html>

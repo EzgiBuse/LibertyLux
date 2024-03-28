@@ -121,7 +121,20 @@ namespace LibertyLux.Business.Services.Concrete
                 throw;
             }
              }
-
+        
+        public async Task<bool> AddOrderItemsAsync(List<OrderItem> orderItems)
+        {
+            try
+            {
+                await _orderRepository.AddOrderItemsAsync(orderItems);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw;
+            }
+        }
 
 
         public async Task<IEnumerable<OrderItem>> GetAllOrderDetailsByTableAsync(int tableId)

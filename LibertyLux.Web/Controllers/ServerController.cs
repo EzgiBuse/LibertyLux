@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Data;
+using System.Linq.Expressions;
 using System.Text;
 using static LibertyLux.Web.Controllers.CustomerMenuController;
 
 namespace LibertyLux.Web.Controllers
 {
-    
+
     public class ServerController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -15,7 +17,7 @@ namespace LibertyLux.Web.Controllers
         public ServerController()
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:7116/"); 
+            _httpClient.BaseAddress = new Uri("https://localhost:7116/");
         }
 
 
@@ -27,34 +29,95 @@ namespace LibertyLux.Web.Controllers
             if (response.IsSuccessStatusCode)
             {
                 string responseData = await response.Content.ReadAsStringAsync();
-                
+
                 restaurantTables = JsonConvert.DeserializeObject<List<RestaurantTable>>(responseData);
             }
             return View(restaurantTables);
 
         }
 
-        public async Task<IActionResult> ServerOrderView(int tableId)
+
+
+
+        public async Task<IActionResult> ServerOrder(int tableId)
         {
-            List<MenuItem> menuItems = new List<MenuItem>();
-            List<MenuItem> sortedMenuItems = new List<MenuItem>();
-            HttpResponseMessage response = await _httpClient.GetAsync("api/Menu/all");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string responseData = await response.Content.ReadAsStringAsync();
+                List<MenuItem> menuItems = new List<MenuItem>();
+                List<MenuItem> sortedMenuItems = new List<MenuItem>();
+                HttpResponseMessage response = await _httpClient.GetAsync("api/Menu/all");
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseData = await response.Content.ReadAsStringAsync();
 
-                menuItems = JsonConvert.DeserializeObject<List<MenuItem>>(responseData);
-                sortedMenuItems = menuItems.OrderBy(item => item.Category).ToList();
+                    menuItems = JsonConvert.DeserializeObject<List<MenuItem>>(responseData);
+                    sortedMenuItems = menuItems.OrderBy(item => item.Category).ToList();
+                    TempData["TableId"] = tableId;
+                    return View("ServerOrderCreationView", sortedMenuItems);
+                }
+
+                return View("Index");
+
+
             }
-            TempData["TableId"] = tableId;
-            return View("ServerOrderCreationView",sortedMenuItems);
+            catch (Exception e)
+            {
+
+                return View("Index");
+
+            }
 
         }
 
-        public async Task<IActionResult> ServerCreateOrder(int tableId, Object requestmodel)
+        public async Task<IActionResult> ServerCreateOrder(int tableId, string requestmodel)
         {
+            try
+            { //Mapping the request model to the OrderItem model and Creating an Order
+                var order = new Order
+                {
+                   
+                    TableId = tableId,
+                    Status = Status.Pending,
+
+                };
+
+                List<OrderItem> items = new List<OrderItem>();
+                var requestOrder = JsonConvert.DeserializeObject<List<ServerCreateOrderRequest>>(requestmodel);
+                foreach (var item in requestOrder)
+                {
+                    // Create a new OrderItem object and map its properties manually
+                    var orderItem = new OrderItem
+                    {
+                        MenuItemId = item.MenuItemId,
+                        MenuItemPrice = double.Parse(item.price),
+                        Quantity = int.Parse(item.quantity),
+                    };
+                    items.Add(orderItem);
+                }
+               
+                order.OrderItems = items;
+                var jsonContent = JsonConvert.SerializeObject(order);
+                var contentString = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PostAsync("api/Orders", contentString);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Handle success, maybe redirect to a confirmation page
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // Handle failure, maybe show an error message
+                    return View("Error");
+                }
+            }
+            catch (Exception e)
+            {
+                return View("Index");
+            }
             return View();
-        }
+        } 
 
 
         public async Task<IActionResult> GetAllOrderDetailsForTable(int tableId)

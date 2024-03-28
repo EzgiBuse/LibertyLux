@@ -66,8 +66,23 @@ namespace LibertyLux.DataAccess.Repository.Concrete
             return false;
              }
 
-
-            public async Task<Order> GetByOrderItemIdAsync(int orderItemId)
+      
+        public async Task<bool> AddOrderItemsAsync(List<OrderItem> orderItems)
+        {
+            try
+            {
+                await _dbContext.OrderItems.AddRangeAsync(orderItems);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
+           
+        }
+        public async Task<Order> GetByOrderItemIdAsync(int orderItemId)
            {
             try
             {
