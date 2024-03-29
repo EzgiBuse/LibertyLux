@@ -6,11 +6,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    @if (TempData["Message"] != null)
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                toastr.success('@TempData["Message"]');
+            });
+        </script>
+    }
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POS System</title>
     <style>
-        .body {
+        body {
             margin: 0;
             font-family: Arial, sans-serif;
         }
@@ -31,54 +42,25 @@
         }
 
         .table {
-            width: 100px; /* Adjust as needed */
-            height: 100px; /* Adjust as needed */
+            width: 100px;
+            height: 100px;
             margin: 10px;
-            background-color: #fff; /* Light theme */
+            background-color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             cursor: pointer;
-            border: 1px solid #ccc; /* Slightly darker border for depth */
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for interactions */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
             .table:hover {
-                transform: translateY(-2px); /* Slight lift effect on hover */
-                box-shadow: 0 6px 12px rgba(0,0,0,0.2); /* Deeper shadow on hover for a popping effect */
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.2);
             }
-
-        .table-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10px;
-        }
-
-        .table-number {
-            font-size: 1.2em; /* Larger font size for table number */
-            font-weight: bold;
-            margin-bottom: 5px; /* Spacing between number and bill amount */
-        }
-
-        .table-bill-amount {
-            font-size: 0.9em;
-            color: #555; /* Darker color for text */
-        }
-
-        /* Optional: Adding an icon or status indicator */
-        .table-status-icon {
-            margin-top: 5px;
-            height: 20px; /* Adjust as needed */
-            width: 20px; /* Adjust as needed */
-            background-image: url('path-to-your-icon.png');
-            background-size: cover;
-            background-position: center;
-        }
-
 
         .orders {
             flex: 40%;
@@ -87,39 +69,43 @@
             overflow-y: auto;
         }
 
-        .order-item {
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-        }
-
-        .bottom-bar {
+        .create-order-btn {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 59%; /* Match the width of the tables container */
-            background-color: #333;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
+            background-color: #007bff; /* Bootstrap primary color */
             color: white;
-            padding: 10px 20px;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
             display: flex;
-            justify-content: space-between;
-            box-sizing: border-box; /* Include padding in the width calculation */
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            transition: background-color 0.3s ease;
         }
 
+            .create-order-btn:hover {
+                background-color: #0056b3; /* A slightly darker blue */
+            }
+
+            .create-order-btn:focus {
+                outline: none;
+            }
     </style>
 </head>
-
-  <body>
+<body>
     <div class="container">
         <div class="tables">
             @foreach (var table in Model)
             {
-                <div class="table" data-table-id="@table.TableId" onclick="loadOrdersForTable(@table.TableId)">
+                <div class="table" data-table-id="@table.TableId" onclick="loadOrdersForTable(@table.TableId)" style="background-color: @(table.Occupancy == 1 ? "#ffcccc" : "#ccffcc");">
                     <div>@table.TableName</div>
-                   
                     <div>Capacity: @table.Capacity</div>
-                    <div>Occupancy: @table.Occupancy</div>
                 </div>
             }
         </div>
@@ -128,9 +114,8 @@
         </div>
     </div>
 
-    <div class="bottom-bar">
-        <button onclick="createOrder()" >Create Order</button>
-        <button>See Orders</button>
+    <button class="create-order-btn" onclick="createOrder()">+</button>
+
     </div>
 
     <script>
@@ -146,13 +131,6 @@
                 .catch(error => console.error('Error loading orders:', error));
         }
 
-        // function createOrder1() {
-        //     console.log(currentTableId);
-        //     var id = Number(currentTableId);
-        //     fetch(`/Server/ServerOrderView?tableId=${id}`, {
-        //         method: 'GET',
-        //     })
-        // }
 
         function createOrder() {
             console.log(currentTableId);

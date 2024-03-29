@@ -10,6 +10,6 @@ namespace LibertyLux.DataAccess.Repository.Menu
 {
     public interface IMenuRepository : IGenericRepository<MenuItem>
     {
-        Task<IEnumerable<MenuItem>> GetByCategoryAsync(int category);
+        Task<List<MenuItem>> GetByCategoryAsync(int category);
     }
 }

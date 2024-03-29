@@ -32,6 +32,8 @@ namespace LibertyLux.Web.Controllers
 
                 restaurantTables = JsonConvert.DeserializeObject<List<RestaurantTable>>(responseData);
             }
+           
+            
             return View(restaurantTables);
 
         }
@@ -75,40 +77,40 @@ namespace LibertyLux.Web.Controllers
             { //Mapping the request model to the OrderItem model and Creating an Order
                 var order = new Order
                 {
-                   
+
                     TableId = tableId,
                     Status = Status.Pending,
-
+                    OrderItems = null
                 };
 
                 List<OrderItem> items = new List<OrderItem>();
+                List<OrderCreateDto> orderCreateDtos = new List<OrderCreateDto>();
                 var requestOrder = JsonConvert.DeserializeObject<List<ServerCreateOrderRequest>>(requestmodel);
                 foreach (var item in requestOrder)
                 {
-                    // Create a new OrderItem object and map its properties manually
-                    var orderItem = new OrderItem
+                   
+                    var orderCreateDto = new OrderCreateDto
                     {
                         MenuItemId = item.MenuItemId,
                         MenuItemPrice = double.Parse(item.price),
-                        Quantity = int.Parse(item.quantity),
+                        Quantity = int.Parse(item.quantity)
                     };
-                    items.Add(orderItem);
+                    orderCreateDtos.Add(orderCreateDto);
                 }
-               
-                order.OrderItems = items;
-                var jsonContent = JsonConvert.SerializeObject(order);
-                var contentString = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await _httpClient.PostAsync("api/Orders", contentString);
+                var jsonContent = JsonConvert.SerializeObject(orderCreateDtos);
+                 var contentString = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _httpClient.PostAsync($"api/Orders/AddOrder/{tableId}", contentString);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Handle success, maybe redirect to a confirmation page
+                    TempData["Message"] = "Order added succesfully";
+                    
                     return RedirectToAction("Index");
+                    
                 }
                 else
                 {
-                    // Handle failure, maybe show an error message
+                    
                     return View("Error");
                 }
             }
@@ -116,7 +118,7 @@ namespace LibertyLux.Web.Controllers
             {
                 return View("Index");
             }
-            return View();
+           
         } 
 
 

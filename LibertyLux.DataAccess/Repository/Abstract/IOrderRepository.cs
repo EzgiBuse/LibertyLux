@@ -10,14 +10,15 @@ namespace LibertyLux.DataAccess.Repository.Menu
 {
     public interface IOrderRepository : IGenericRepository<Order>
     {
-        Task<IEnumerable<Order>> GetOrdersByTableAsync(int tableId);
-        Task<IEnumerable<OrderItem>> GetAllOrderDetailsForTableAsync(int tableId);
-        // Additional methods specific to order operations can be added here
-        
+        Task<List<Order>> GetOrdersByTableAsync(int tableId);
+        Task<List<OrderItem>> GetAllOrderDetailsForTableAsync(int tableId);
+       
        Task<Order> GetByOrderItemIdAsync(int orderItemId);
 
         Task<bool> DeleteOrderItemByOrderItemIdAsync(int orderItemId);
 
         Task<bool> AddOrderItemsAsync(List<OrderItem> orderItems);
+
+        Task<List<OrderItem>> GetAllOrderItemsAsync();
     }
 }

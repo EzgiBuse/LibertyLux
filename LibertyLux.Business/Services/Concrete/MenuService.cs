@@ -19,7 +19,7 @@ namespace LibertyLux.Business.Services.Concrete
                 _menuItemRepository = menuItemRepository;
             }
 
-            public async Task<IEnumerable<MenuItem>> GetAllMenuItemsAsync()
+            public async Task<List<MenuItem>> GetAllMenuItemsAsync()
             {
                 try
                 {
@@ -83,7 +83,7 @@ namespace LibertyLux.Business.Services.Concrete
                     throw;
                 }
             }
-        public async Task<IEnumerable<MenuItem>> GetMenuItemsByCategoryAsync(int category)
+        public async Task<List<MenuItem>> GetMenuItemsByCategoryAsync(int category)
         {
             try
             {

@@ -30,7 +30,7 @@ namespace LibertyLux.DataAccess.Repository.Generic
             }
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync()
         {
             try
             {

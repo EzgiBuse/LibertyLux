@@ -9,11 +9,11 @@ namespace LibertyLux.Business.Services.Abstract
 {
     public interface IMenuService
     {
-        Task<IEnumerable<MenuItem>> GetAllMenuItemsAsync();
+        Task<List<MenuItem>> GetAllMenuItemsAsync();
         Task<MenuItem> GetMenuItemByIdAsync(int id);
         Task AddMenuItemAsync(MenuItem menuItem);
         Task UpdateMenuItemAsync(MenuItem menuItem);
         Task DeleteMenuItemAsync(int id);
-        Task<IEnumerable<MenuItem>> GetMenuItemsByCategoryAsync(int category);
+        Task<List<MenuItem>> GetMenuItemsByCategoryAsync(int category);
     }
 }

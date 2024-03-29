@@ -18,7 +18,7 @@ namespace LibertyLux.Business.Services.Concrete
             _orderRepository = orderRepository;
         }
 
-        public async Task<IEnumerable<Order>> GetAllOrdersAsync()
+        public async Task<List<Order>> GetAllOrdersAsync()
         {
             try
             {
@@ -30,6 +30,19 @@ namespace LibertyLux.Business.Services.Concrete
                 throw;
             }
         }
+        public async Task<List<OrderItem>> GetAllOrderItemsAsync()
+        {
+            try
+            {
+                return await _orderRepository.GetAllOrderItemsAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
@@ -57,7 +70,7 @@ namespace LibertyLux.Business.Services.Concrete
             }
         }
 
-        public async Task<IEnumerable<Order>> GetOrdersByTableAsync(int tableId)
+        public async Task<List<Order>> GetOrdersByTableAsync(int tableId)
         {
             try
             {
@@ -137,7 +150,7 @@ namespace LibertyLux.Business.Services.Concrete
         }
 
 
-        public async Task<IEnumerable<OrderItem>> GetAllOrderDetailsByTableAsync(int tableId)
+        public async Task<List<OrderItem>> GetAllOrderDetailsByTableAsync(int tableId)
         {
             try
             {

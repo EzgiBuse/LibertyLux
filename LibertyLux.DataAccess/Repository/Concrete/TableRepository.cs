@@ -19,6 +19,6 @@ namespace LibertyLux.DataAccess.Repository.Concrete
             _dbContext = dbContext;
         }
 
-        // If you want to add any additional methods specific to tables, you can do so here.
+       
     }
 }

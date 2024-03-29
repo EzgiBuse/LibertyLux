@@ -19,7 +19,7 @@ namespace LibertyLux.Business.Services.Concrete
             _tableRepository = tableRepository;
         }
 
-        public async Task<IEnumerable<RestaurantTable>> GetAllTablesAsync()
+        public async Task<List<RestaurantTable>> GetAllTablesAsync()
         {
             try
             {
@@ -27,7 +27,6 @@ namespace LibertyLux.Business.Services.Concrete
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
                 throw;
             }
         }
@@ -40,7 +39,7 @@ namespace LibertyLux.Business.Services.Concrete
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
+                
                 throw;
             }
         }
@@ -53,7 +52,7 @@ namespace LibertyLux.Business.Services.Concrete
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
+               
                 throw;
             }
         }
@@ -66,7 +65,7 @@ namespace LibertyLux.Business.Services.Concrete
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
+                
                 throw;
             }
         }
@@ -79,7 +78,7 @@ namespace LibertyLux.Business.Services.Concrete
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
+                
                 throw;
             }
         }

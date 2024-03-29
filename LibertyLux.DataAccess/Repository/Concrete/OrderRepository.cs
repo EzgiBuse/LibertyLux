@@ -20,7 +20,7 @@ namespace LibertyLux.DataAccess.Repository.Concrete
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<OrderItem>> GetAllOrderDetailsForTableAsync(int tableId)
+        public async Task<List<OrderItem>> GetAllOrderDetailsForTableAsync(int tableId)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace LibertyLux.DataAccess.Repository.Concrete
         }
 
 
-        public async Task<IEnumerable<Order>> GetOrdersByTableAsync(int tableId)
+        public async Task<List<Order>> GetOrdersByTableAsync(int tableId)
         {
             try
             {
@@ -65,8 +65,22 @@ namespace LibertyLux.DataAccess.Repository.Concrete
             }
             return false;
              }
+       
+        public async Task<List<OrderItem>> GetAllOrderItemsAsync()
+        {
+            try
+            {
 
-      
+                return await _dbContext.OrderItems.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return new List<OrderItem>();
+            }
+        }
+
         public async Task<bool> AddOrderItemsAsync(List<OrderItem> orderItems)
         {
             try

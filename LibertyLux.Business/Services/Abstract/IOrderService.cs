@@ -9,16 +9,16 @@ namespace LibertyLux.Business.Services.Abstract
 {
     public interface IOrderService
     {
-        Task<IEnumerable<Order>> GetAllOrdersAsync();
+        Task<List<Order>> GetAllOrdersAsync();
         Task<Order> GetOrderByIdAsync(int id);
         Task<Order> GetOrderByOrderItemIdAsync(int id);
         Task AddOrderAsync(Order order);
         Task UpdateOrderAsync(Order order);
-        Task<IEnumerable<Order>> GetOrdersByTableAsync(int tableId);
-        Task<IEnumerable<OrderItem>> GetAllOrderDetailsByTableAsync(int tableId);
+        Task<List<Order>> GetOrdersByTableAsync(int tableId);
+        Task<List<OrderItem>> GetAllOrderDetailsByTableAsync(int tableId);
         Task DeleteOrderAsync(int id);
         Task<bool> DeleteOrderItemByOrderItemIdAsync(int id);
-
+        Task<List<OrderItem>> GetAllOrderItemsAsync();
         Task<bool> AddOrderItemsAsync(List<OrderItem> orderItems);
     }
 }

@@ -20,7 +20,7 @@ namespace LibertyLux.DataAccess.Repository.Concrete
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<MenuItem>> GetByCategoryAsync(int category)
+        public async Task<List<MenuItem>> GetByCategoryAsync(int category)
         {
             return await _dbContext.Set<MenuItem>().Where(item => ((int)item.Category) == category).ToListAsync();
         }

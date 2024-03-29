@@ -1,0 +1,237 @@
+﻿@model List<OrderItem>
+@{
+    ViewData["Title"] = "Cook Dashboard";
+    Layout = null; // Or your layout file here
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>@ViewData["Title"]</title>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        h1.text-center {
+            font-size: 2.5em; /* Large font size for heading */
+            color: #333; /* Dark text for better contrast */
+            margin-bottom: 0.5em; /* Space below the heading */
+        }
+
+        .order-card {
+            margin: 10px auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px; /* Adjust based on your preference */
+        }
+
+        .order-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+       
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .order-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin: 20px;
+            flex-basis: calc(33.333% - 40px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .order-card:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            }
+
+        .order-image {
+            width: 100%;
+            height: 150px; /* Adjust based on your image aspect ratio */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .order-details {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .order-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .order-description {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .order-price {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .order-actions {
+            padding: 15px;
+            width: 100%;
+            text-align: center;
+        }
+
+            .order-actions button {
+                margin: 5px;
+            }
+
+    </style>
+</head>
+<body>
+    <h1 class="text-center my-4">New Orders</h1>
+    <div class="container">
+        
+        @foreach (var item in Model)
+        {
+            <div class="order-card">
+               
+                <div class="order-details">
+                    <div class="order-title">@item.MenuItem.Name</div>
+                    <div class="order-description">
+                        <img src="@item.MenuItem.Image" alt="Menu Item" style="max-width: 100%; height: auto;" />
+                    </div>
+
+                    <div class="order-price">Quantity: @item.Quantity</div>
+                </div>
+                <div class="order-actions">
+                    <!-- Approve Button -->
+                    <button onclick="approveOrder(this)"
+                            data-order-item-id="@item.OrderItemId"
+                          
+                            class="btn btn-success">
+                        Approve
+                    </button>
+
+                    <!-- Mark as Ready Button -->
+                    <button onclick="markOrderAsReady(this)"
+                            data-order-item-id="@item.OrderItemId"
+                          
+                            class="btn btn-primary">
+                        Mark as Ready
+                    </button>
+
+                    <!-- Cancel Button -->
+                    <button onclick="cancelOrder(this)"
+                            data-order-item-id="@item.OrderItemId"
+                            
+                            class="btn btn-danger">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+
+    
+    <script>
+        function markOrderAsReady(element) {
+            var orderItemId = element.getAttribute('data-order-item-id');
+            console.log(orderItemId);
+            const numericOrderId = Number(orderItemId.trim());
+
+            fetch(`/Cook/UpdateOrderStatus?orderItemId=${numericOrderId}&status=Ready`, {
+                method: 'GET',
+            })
+                .then(response => {
+                    if (response.ok) {
+                        
+                        window.location.href = '/Cook/Index'; 
+
+                        alert("Order marked as ready successfully.");
+
+                    } else {
+                        alert("Failed to mark order as ready.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("An error occurred while marking the order as ready.");
+                });
+        }
+
+
+        function approveOrder(element) {
+            var orderItemId = element.getAttribute('data-order-item-id');
+            console.log(orderItemId);
+            const numericOrderId = Number(orderItemId.trim());
+
+            fetch(`/Cook/UpdateOrderStatus?orderItemId=${numericOrderId}&status=InProgress`, {
+                method: 'GET',
+            })
+                .then(response => {
+                    if (response.ok) {
+                       
+                        alert("Order approved successfully.");
+                    } else {
+                        alert("Failed to mark order as ready.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("An error occurred while marking the order as ready.");
+                });
+        }
+        function cancelOrder(element) {
+            var orderItemId = element.getAttribute('data-order-item-id');
+
+            const numericOrderId = Number(orderItemId.trim());
+
+            fetch(`/Cook/UpdateOrderStatus?orderItemId=${numericOrderId}&status=Cancelled`, {
+                method: 'GET',
+
+            })
+                .then(response => {
+                    if (response.ok) {
+
+                        window.location.href = '/Cook/Index';
+
+                        alert("Order cancelled successfully.");
+                    } else {
+                        alert("Failed to mark order as ready.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("An error occurred while marking the order as ready.");
+                });
+        }
+
+    </script>
+</body>
+</html>

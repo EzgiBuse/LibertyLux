@@ -1,6 +1,7 @@
 ﻿using LibertyLux.Business.Services.Abstract;
 using LibertyLux.Business.Services.Concrete;
 using LibertyLux.Entity;
+using LibertyLux.Entity.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,20 @@ namespace LibertyLux.API.Controllers
             {
                 var orders = await _orderService.GetAllOrdersAsync();
                 return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet("GetAllOrderItems")]
+        public async Task<IActionResult> GetAllOrderItems()
+        {
+            try
+            {
+                var orderItems = await _orderService.GetAllOrderItemsAsync();
+                return Ok(orderItems);
             }
             catch (Exception ex)
             {
@@ -88,6 +103,49 @@ namespace LibertyLux.API.Controllers
             }
         }
 
+        [HttpPut("UpdateOrderStatusByOrderItemId/{id}/{status}")]
+        public async Task<IActionResult> UpdateOrderStatusByOrderItemId(int id,string status)
+        {
+            try
+            {
+                var order = await _orderService.GetOrderByOrderItemIdAsync(id);
+                if (order == null)
+                {
+                    return NotFound($"Order with ID {id} not found.");
+                }
+
+                switch (status)
+                {
+                    case "Pending":
+                        order.Status = Status.Pending;
+                        break;
+                    case "InProgress":
+                        order.Status = Status.Cancelled;
+                        break;
+                    case "Ready":
+                        order.Status = Status.Ready;
+                        break;
+                    case "Served":
+                        order.Status = Status.Served;
+                        break;
+                    case "Cancelled":
+                        order.Status = Status.Cancelled;
+                        break;
+                    default:
+                        break;
+                }
+
+                
+                await _orderService.UpdateOrderAsync(order);
+                return Ok(order);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
         [HttpGet("tableorders/{tableId}")]
         public async Task<IActionResult> GetOrdersByTable(int tableId)
         {
@@ -124,17 +182,44 @@ namespace LibertyLux.API.Controllers
             }
         }
 
-        [HttpPost("AddOrder")]
-        public async Task<IActionResult> AddOrder([FromBody] Order order)
+        
+
+        [HttpPost("AddOrder/{tableId}")]
+        public async Task<IActionResult> AddOrder([FromRoute] int tableId, [FromBody] List<OrderCreateDto> orderDtos)
         {
             try
             {
-                
-                if (order == null)
-                    return BadRequest("Order is null.");
+
+                if (orderDtos == null || !orderDtos.Any())
+                {
+                    return BadRequest("Invalid order details.");
+                }
+
+                var order = new Order
+                {
+                    TableId = tableId,
+                    Status = Status.Pending,
+                    OrderItems = new List<OrderItem>()
+                };
 
                 await _orderService.AddOrderAsync(order);
-                return CreatedAtAction(nameof(GetOrderByOrderId), new { id = order.OrderId }, order);
+
+                // Convert OrderCreateDtos to OrderItems
+                foreach (var dto in orderDtos)
+                {
+                    var orderItem = new OrderItem
+                    {
+                        OrderId = order.OrderId,
+                        MenuItemId = dto.MenuItemId,
+                        Quantity = dto.Quantity,
+                        MenuItemPrice = dto.MenuItemPrice
+                    };
+
+                   order.OrderItems.Add(orderItem);
+                }
+
+                await _orderService.UpdateOrderAsync(order);
+                return StatusCode(StatusCodes.Status200OK);
             }
             catch (Exception ex)
             {
