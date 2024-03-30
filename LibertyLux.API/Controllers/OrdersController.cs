@@ -302,6 +302,22 @@ namespace LibertyLux.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpDelete("DeleteOrdersAndOrderDetailsByTableId/{tableId}")]
+        public async Task<IActionResult> DeleteOrdersAndOrderDetailsByTableId(int tableId)
+        {
+            try
+            {
+                var tableOrders = await _orderService.DeleteAllByTableIdAsync(tableId);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
     }
 
 }

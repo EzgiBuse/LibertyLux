@@ -90,6 +90,28 @@ namespace LibertyLux.API.Controllers
             }
         }
 
+        [HttpPut("{tableId}/{occupation}")]
+        public async Task<IActionResult> UpdateTableOccupation(int tableId, int occupation)
+        {
+            try
+            {
+                var tableToUpdate = await _tableService.GetTableByIdAsync(tableId);
+                if (tableToUpdate == null)
+                {
+                    return NotFound($"Table with ID {tableId} not found.");
+                }
+                tableToUpdate.Occupancy= occupation;
+               
+                await _tableService.UpdateTableAsync(tableToUpdate);
+
+                return NoContent(); // Indicates success without returning data
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTable(int id)
         {

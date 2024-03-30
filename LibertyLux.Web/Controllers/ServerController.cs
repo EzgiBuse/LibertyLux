@@ -122,6 +122,8 @@ namespace LibertyLux.Web.Controllers
         } 
 
 
+
+
         public async Task<IActionResult> GetAllOrderDetailsForTable(int tableId)
         {
             try
@@ -200,6 +202,8 @@ namespace LibertyLux.Web.Controllers
                   
                     return BadRequest();
                 }
+
+
 
                 // Redirect or return success
                 return RedirectToAction("Index"); 

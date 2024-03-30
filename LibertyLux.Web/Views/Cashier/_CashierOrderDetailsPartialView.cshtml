@@ -1,0 +1,111 @@
+﻿@model List<OrderItemViewModel>
+
+<style>
+    .order-container {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+    }
+
+    .order-header {
+        display: flex;
+        background-color: #eee;
+        padding: 10px;
+        font-weight: bold;
+    }
+
+    .order-row {
+        display: flex;
+        padding: 10px;
+        align-items: center;
+    }
+
+        .order-row:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .order-row:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+    .order-cell {
+        flex: 1;
+        text-align: left;
+        padding-right: 20px; /* Adjust as needed */
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
+    }
+
+    .approve-button, .cancel-button {
+        cursor: pointer;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        margin-left: 10px;
+    }
+
+    .approve-button {
+        background-color: #4CAF50;
+    }
+
+    .cancel-button {
+        background-color: #f44336;
+    }
+
+    .status-pending {
+        color: #FFA500; /* Orange - indicating waiting action */
+    }
+
+    .status-inprogress {
+        color: #00BFFF; /* Deep Sky Blue - indicating ongoing process */
+    }
+
+    .status-ready {
+        color: #32CD32; /* Lime Green - indicating readiness */
+    }
+
+    .status-served {
+        color: #808080; /* Grey - indicating completion */
+    }
+
+    .status-cancelled {
+        color: #DC143C; /* Crimson - indicating cancellation */
+    }
+
+</style>
+
+<div class="order-container">
+    <div class="order-header">
+        <div class="order-cell">Item</div>
+        <div class="order-cell">Qty</div>
+        <div class="order-cell">Price</div>
+        <div class="order-cell">Status</div>
+        <div class="order-cell action-buttons">Actions</div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="order-row">
+            <div class="order-cell">@item.MenuItemName</div>
+            <div class="order-cell">@item.Quantity</div>
+            <div class="order-cell">$@item.MenuItemPrice</div>
+            <div class="order-cell">$@item.OrderItemId</div>
+          
+          
+        </div>
+    }
+
+
+
+</div>
+
+
+
+
+

@@ -163,6 +163,41 @@ namespace LibertyLux.Business.Services.Concrete
                 throw;
             }
         }
+      
+        public async Task<bool> DeleteAllByTableIdAsync(int tableId)
+        {
+            try
+            {
+                var orders = await _orderRepository.GetOrdersByTableAsync(tableId);
+                List<int> orderIds = new List<int>();
+                List<OrderItem> ordersItems = new List<OrderItem>();
+
+                foreach (var item in orders)
+                {
+                    orderIds.Add(item.OrderId);
+                }
+
+                var orderItems = await _orderRepository.GetAllOrderItemsAsync();
+                foreach (var item in orderItems)
+                {
+                    if (orderIds.Contains(item.OrderId))
+                    {  //Deleting OrderItem related to the table
+                        await _orderRepository.DeleteOrderItemByOrderItemIdAsync(item.OrderId);
+                    }
+                }
+                foreach (var item in orderIds)
+                {   //Deleting orders related to table
+                    await _orderRepository.DeleteAsync(item);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 
 }
