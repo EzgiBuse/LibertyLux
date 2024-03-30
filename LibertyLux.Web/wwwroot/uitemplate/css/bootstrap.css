@@ -172,9 +172,9 @@ filters_menu category-button a {
 
 
 a {
-  color: black;
-  text-decoration: none;
-  background-color: grey;
+    color: black;
+    text-decoration: none;
+    background-color: grey;
 }
 
 /*a:hover {

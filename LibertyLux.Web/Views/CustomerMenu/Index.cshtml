@@ -6,7 +6,23 @@
 <!DOCTYPE html>
 <html>
     @Html.Partial("_HeadPartialView");
+<style>
+    .category-button a {
+        background-color: #000033; /* A more appealing green */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
 
+        .category-button a:hover {
+            background-color: #000080; /* A darker shade of green for hover effect */
+            color: #ffffff;
+        }
+</style>
 
 <body class="sub_page">
 
@@ -77,16 +93,7 @@
                                         <p>@menuItem.Description</p>
                                         <div class="options">
                                             <h6>$@menuItem.Price</h6>
-                                            <a href="#">
-                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
-                                                <g>
-                                                <g>
-                                                <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248 c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
-                                        </g>
-                                    </g>
-                                    
-                                </svg>
-                                            </a>
+                                            
                                         </div>
                                     </div>
                                 </div>

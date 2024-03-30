@@ -128,7 +128,7 @@
         let currentTableId = 0;
         function loadOrdersForTable(tableId) {
             currentTableId = tableId;
-            fetch(`/Server/GetAllOrderDetailsForTable?tableId=${tableId}`)
+            fetch(`/Cashier/GetAllOrderDetailsForTable?tableId=${tableId}`)
                 .then(response => response.text()) // Expecting HTML response
                 .then(html => {
                     const ordersContainer = document.querySelector('.orders');

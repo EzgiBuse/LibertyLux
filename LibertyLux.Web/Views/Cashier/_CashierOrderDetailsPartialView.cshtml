@@ -95,9 +95,22 @@
             <div class="order-cell">@item.MenuItemName</div>
             <div class="order-cell">@item.Quantity</div>
             <div class="order-cell">$@item.MenuItemPrice</div>
-            <div class="order-cell">$@item.OrderItemId</div>
-          
-          
+            <div class="order-cell">
+                <span class="@($"status-{item.Status.ToString().ToLower()}")">@item.Status</span>
+            </div>
+            <div class="order-cell action-buttons">
+                @if (item.Status.ToString() == "Pending" || item.Status.ToString() == "InProgress" || item.Status.ToString() == "Ready")
+                {
+                    <button class="approve-button" data-order-item-id="@item.OrderItemId" data-table-id="@Model[0].TableId" onclick="approveOrder(this)">✔</button>
+
+
+                }
+                @if (item.Status.ToString() != "Cancelled")
+                {
+                    <button class="cancel-button" data-order-item-id="@item.OrderItemId" data-table-id="@Model[0].TableId" onclick="cancelOrder(this)">✖</button>
+                }
+
+            </div>
         </div>
     }
 
