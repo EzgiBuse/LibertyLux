@@ -89,17 +89,17 @@ Explore the LibertyLux project through this media showcase, featuring screenshot
 
 For a more dynamic look at LibertyLux, check out these video demonstrations:
 
-### Video Overview 1
-[![Server's UI and Creating a New Order](Link_to_thumbnail_image)](https://youtu.be/WI4lENJyeIU)
+### Server's UI and Creating a New Order
+[![Server's UI and Creating a New Order](https://img.youtube.com/vi/WI4lENJyeIU/0.jpg)](https://youtu.be/WI4lENJyeIU)
 
-### Video Overview 2
-[![Video Overview 2](Link_to_thumbnail_image)](https://github.com/YourUsername/LibertyLux/blob/main/LibertyLux-Project-Media/2024-03-30%2021-08-51.mp4)
+### Customer Menu
+[![Customer Menu](https://img.youtube.com/vi/-pmu1QSZMcs/0.jpg)](https://youtu.be/-pmu1QSZMcs)
 
-### Video Overview 3
-[![Video Overview 3](Link_to_thumbnail_image)](https://github.com/YourUsername/LibertyLux/blob/main/LibertyLux-Project-Media/2024-03-30%2021-13-48.mp4)
+### Cashier UI
+[![Cashier UI](https://img.youtube.com/vi/ZwJA6AOV23o/0.jpg)](https://youtu.be/ZwJA6AOV23o)
 
-### Video Overview 4
-[![Video Overview 4](Link_to_thumbnail_image)](https://github.com/YourUsername/LibertyLux/blob/main/LibertyLux-Project-Media/2024-03-30%2021-15-00.mp4)
+### Cook UI
+[![Cook UI](https://img.youtube.com/vi/CZUAL7lO7Cc/0.jpg)](https://youtu.be/CZUAL7lO7Cc)
 
-### Video Overview 5
-[![Video Overview 5](Link_to_thumbnail_image)](https://github.com/YourUsername/LibertyLux/blob/main/LibertyLux-Project-Media/2024-03-30%2021-18-46.mp4)
+### SignalR Showcase Between Server and Cook
+[![SignalR Showcase Between Server and Cook](https://img.youtube.com/vi/LtOp4MVrCrQ/0.jpg)](https://youtu.be/LtOp4MVrCrQ)
