@@ -63,3 +63,43 @@ LibertyLux is built using an N-Tier architecture to ensure a clear separation of
 ### Cashier Features:
 
 - **Order and Bill Review**: Cashiers access detailed views of table orders and corresponding bills, including itemized selections and total amounts due.
+
+# LibertyLux Media Showcase
+
+Explore the LibertyLux project through this media showcase, featuring screenshots and video demonstrations of key functionalities across the platform.
+
+## Screenshots
+
+### Cashier Interface
+![Cashier Interface](LibertyLux-Project-Media/CashierIndex.PNG "Cashier Interface")
+
+### Cook Interface
+![Cook Interface](LibertyLux-Project-Media/CookIndex.PNG "Cook Interface")
+
+### Creating a New Order
+![Creating a New Order](LibertyLux-Project-Media/CreateNewOrder.PNG "Creating a New Order")
+
+### Customer Menu
+![Customer Menu](LibertyLux-Project-Media/CustomerMenu.PNG "Customer Menu")
+
+### Server Interface
+![Server Interface](LibertyLux-Project-Media/ServerIndex.PNG "Server Interface")
+
+## Video Demonstrations
+
+For a more dynamic look at LibertyLux, check out these video demonstrations:
+
+### Video Overview 1
+[![Server's UI and Creating a New Order](Link_to_thumbnail_image)](https://youtu.be/WI4lENJyeIU)
+
+### Video Overview 2
+[![Video Overview 2](Link_to_thumbnail_image)](https://github.com/YourUsername/LibertyLux/blob/main/LibertyLux-Project-Media/2024-03-30%2021-08-51.mp4)
+
+### Video Overview 3
+[![Video Overview 3](Link_to_thumbnail_image)](https://github.com/YourUsername/LibertyLux/blob/main/LibertyLux-Project-Media/2024-03-30%2021-13-48.mp4)
+
+### Video Overview 4
+[![Video Overview 4](Link_to_thumbnail_image)](https://github.com/YourUsername/LibertyLux/blob/main/LibertyLux-Project-Media/2024-03-30%2021-15-00.mp4)
+
+### Video Overview 5
+[![Video Overview 5](Link_to_thumbnail_image)](https://github.com/YourUsername/LibertyLux/blob/main/LibertyLux-Project-Media/2024-03-30%2021-18-46.mp4)
