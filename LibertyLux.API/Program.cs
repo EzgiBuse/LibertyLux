@@ -1,3 +1,4 @@
+using LibertyLux.API.Hubs;
 using LibertyLux.Business.Services.Abstract;
 using LibertyLux.Business.Services.Concrete;
 using LibertyLux.DataAccess.DbContext;
@@ -39,6 +40,19 @@ builder.Services.AddScoped<ITableRepository, TableRepository>();
 builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ITableService, TableService>();
+builder.Services.AddSignalR();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyAllowSpecificOrigins",
+                      policy =>
+                      {
+                          policy.WithOrigins("https://localhost:7298") // Client app's origin
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowCredentials();
+                      });
+});
 
 var app = builder.Build();
 
@@ -61,5 +75,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("MyAllowSpecificOrigins");
+app.MapHub<OrderHub>("/orderhub");
+
 
 app.Run();

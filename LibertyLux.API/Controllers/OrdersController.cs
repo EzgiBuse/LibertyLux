@@ -1,9 +1,11 @@
-﻿using LibertyLux.Business.Services.Abstract;
+﻿using LibertyLux.API.Hubs;
+using LibertyLux.Business.Services.Abstract;
 using LibertyLux.Business.Services.Concrete;
 using LibertyLux.Entity;
 using LibertyLux.Entity.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace LibertyLux.API.Controllers
 {
@@ -12,10 +14,13 @@ namespace LibertyLux.API.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly IHubContext<OrderHub> _hubContext;
 
-        public OrdersController(IOrderService orderService)
+
+        public OrdersController(IOrderService orderService, IHubContext<OrderHub> hubContext)
         {
             _orderService = orderService;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -219,6 +224,8 @@ namespace LibertyLux.API.Controllers
                 }
 
                 await _orderService.UpdateOrderAsync(order);
+                await _hubContext.Clients.All.SendAsync("ReceiveOrder");
+
                 return StatusCode(StatusCodes.Status200OK);
             }
             catch (Exception ex)

@@ -11,6 +11,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
     <title>@ViewData["Title"]</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -160,6 +168,20 @@
 
     
     <script>
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("https://localhost:7116/orderhub")
+            .build();
+
+        connection.on("ReceiveOrder", function () {
+            window.location.reload(true);
+            console.log("hi");
+        });
+
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+
         function markOrderAsReady(element) {
             var orderItemId = element.getAttribute('data-order-item-id');
             console.log(orderItemId);
