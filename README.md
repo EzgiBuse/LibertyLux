@@ -68,6 +68,8 @@ LibertyLux is built using an N-Tier architecture to ensure a clear separation of
 
 Explore the LibertyLux project through this media showcase, featuring screenshots and video demonstrations of key functionalities across the platform.
 
+--Project is still in progress--
+
 ## Screenshots
 
 ### Cashier Interface
